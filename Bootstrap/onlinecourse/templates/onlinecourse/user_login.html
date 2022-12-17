@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+
+<!--Navigation bar -->
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'onlinecourse:popular_course_list' %}">Online Courses</a>
+        </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    {% if user.is_authenticated %}
+                        <a href="#">{{ user.first_name }}({{ user.username }})</a>
+                        <a href="{% url 'onlinecourse:logout' %}">Logout</a>
+                    {% else %}
+                        </li>
+                        <li>
+                            <form action="{% url 'onlinecourse:login' %}" method="post">
+                                {% csrf_token %}
+                                <div >
+                                    <input type="text" placeholder="Username" name="username" >
+                                    <input type="password" placeholder="Username" name="psw" >
+                                    <button type="submit">Login</button>
+                                    <a  href="{% url 'onlinecourse:registration' %}">Sign Up</a>
+                                </div>
+                            </form>
+                        </li>
+                    {% endif %}
+            </ul>
+    </div>
+</nav>
+<!-- Stylize Login form -->
+<form action="{% url 'onlinecourse:login' %}" method="post">
+  {% csrf_token %}
+  <div class="container"> <!--Stylize root div with .container class -->
+    <h1>Login</h1>
+    <div class="form-group"> <!--Stylize second div with .form-group class -->
+      <label for="username"><b>User Name: </b></label>
+      <input id="username" class="form-container" type="text" placeholder="Enter User Name: " name="username" required> <!--Stylize input with .form-control class -->
+      <label for="psw"><b>Password: </b></label>
+      <input id="psw" type="password" class="form-container" placeholder="Enter Password: " name="psw" required> <!--Stylize input with .form-control class -->
+    </div>
+    {% if message %}
+      <div class="alert alert-warning"> <!--Stylize the message paragraph with .alert and .alert-warning class -->
+        {{ message }}
+      </div>
+    {% endif %}
+    <button class="btn btn-primary" type="submit">Login</button> <!--Stylize button with .btn and .btn-primary class -->
+  </div>
+</form>
+</body>
